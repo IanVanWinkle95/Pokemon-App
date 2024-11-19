@@ -1,19 +1,52 @@
 const express = require('express')
 const app = express()
+const fs = require('fs')
 const port = 3000;
-
 const error = require("./utilities/error")
+const path = require('path')
+const cors = require('cors')
+const bodyParser = require('body-parser')
+// const pokemon = require("./data/pokedex")
+const pug = require("pug")
+const router = express.Router()
 
-app.set("view engine", "ejs")
-
+app.set("views", path.join(__dirname, "views"))
+app.set("view engine", "pug")
 app.use(express.json())
 app.use(express.static('public'))
 
+app.use(cors({origin:"*"}))
+app.use(express.static(path.join(__dirname)))
+app.use(express.urlencoded({extended:true}))
+
+const pokemonData = require('./data/pokedex')
 const pokemonRoutes = require('./Routes/pokemonRoutes')
-app.use('/pokemon', pokemonRoutes)
+// const router = require('./Routes/pokemonRoutes')
+
+app.use('/', router)
+app.use('/pokemon', router)
+
+// router.get('/', function (req, res) {
+//     res.render(path.join(__dirname, "index"))
+// })
+
+router.get("/", function(req, res) {
+    res.render("index", {})
+})
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ extended: true }));
+
+router.route("/pokemon").get((req, res) => {
+    // const pokemonObjects = pokemon
+    res.json({pokemonData})
+    // console.log(pokemonData)
+})
+
+app.get("/pokemon/:id", async (req, res) => {
+    const id = req.params
+    console.log(id)
+})
 
 app.use((req, res, next) => {
     const time = new Date();
@@ -42,3 +75,4 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`Server listening on port: ${port}.`)
 })
+
