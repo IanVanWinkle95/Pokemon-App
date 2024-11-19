@@ -2,20 +2,20 @@ const pokemon = [
     {
         id: 1,
         name: "Bulbasaur",
-        Type: "Grass, Poison",
-        BaseStats: "Total 318",
+        Type: ["Grass, Poison"],
+        BaseStats: 318,
     },
     {
-        id: 1,
+        id: 2,
         name: "Ivysaur",
-        Type: "Grass, Poison",
-        BaseStats: "Total 405",
+        Type: ["Grass, Poison"],
+        BaseStats: 405,
     },
     {
-        id: 1,
+        id: 3,
         name: "Venusaur",
-        Type: "Grass, Poison",
-        BaseStats: "Total 525",
+        Type: ["Grass, Poison"],
+        BaseStats: 525,
     },
 ]
 

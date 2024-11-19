@@ -1,7 +1,11 @@
-router.get('/', pokemonController.getPokemon)
+const express = require('express')
+const router = express.Router()
+const pokemonController = require('../controllers/pokemonController')
+const error = require('../utilities/error')
 
-router.get('/:id', pokemonController.getPokemonById)
+router.get('/', pokemonController.searchPokemon)
+router.get('/', pokemonController.viewTeam)
+router.post('/:id', pokemonController.addPokemonToTeam)
+router.delete('/:id', pokemonController.deletePokemonFromTeam)
 
-router.post('/', pokemonController.addPokemon)
-
-router.put('/:id', pokemonController.updatePokemon)
+module.exports = router;
