@@ -10,7 +10,7 @@ form.addEventListener('submit', async (e) => {
     console.log(url)
 
     // base url - settting var
-    const response = await fetch(`${url}/pokemon`)
+    const response = await fetch(`${url}/pokemon/${name}`)
     const data = await response.json().then((value) => {
         console.log(value)
     })

@@ -15,9 +15,9 @@ app.set("view engine", "pug")
 app.use(express.json())
 app.use(express.static('public'))
 
-app.use(cors({origin:"*"}))
+app.use(cors({ origin: "*" }))
 app.use(express.static(path.join(__dirname)))
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }))
 
 const pokemonData = require('./data/pokedex')
 const pokemonRoutes = require('./Routes/pokemonRoutes')
@@ -30,7 +30,7 @@ app.use('/pokemon', router)
 //     res.render(path.join(__dirname, "index"))
 // })
 
-router.get("/", function(req, res) {
+router.get("/", function (req, res) {
     res.render("index", {})
 })
 
@@ -39,13 +39,19 @@ app.use(bodyParser.json({ extended: true }));
 
 router.route("/pokemon").get((req, res) => {
     // const pokemonObjects = pokemon
-    res.json({pokemonData})
+    res.json({ pokemonData })
     // console.log(pokemonData)
 })
 
 app.get("/pokemon/:id", async (req, res) => {
-    const id = req.params
-    console.log(id)
+    const id = req.params.id
+    const individualPokemon = pokemonData.find((p) => {
+        return p.name == id
+        // console.log(id)
+        
+
+    })
+    res.json({individualPokemon})
 })
 
 app.use((req, res, next) => {
