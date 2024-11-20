@@ -1,12 +1,15 @@
+// Had a ton of help from Luis with this project with figuring out my routes and controllers.
+// Was going to try an implement the data to show up on the page but did not have time. 
+// All the data gathered when searching for pokemon/badges show up in the browser console.
+
 const express = require('express')
 const app = express()
 const fs = require('fs')
-const port = 3000;
+const port = 3000
 const error = require("./utilities/error")
 const path = require('path')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-// const pokemon = require("./data/pokedex")
 const pug = require("pug")
 const router = express.Router()
 
@@ -20,6 +23,7 @@ app.use(express.static(path.join(__dirname)))
 app.use(express.urlencoded({ extended: true }))
 
 const pokemonData = require('./data/pokedex')
+const badgeData = require('./data/badges')
 const pokemonRoutes = require('./Routes/pokemonRoutes')
 // const router = require('./Routes/pokemonRoutes')
 
@@ -48,10 +52,20 @@ app.get("/pokemon/:id", async (req, res) => {
     const individualPokemon = pokemonData.find((p) => {
         return p.name == id
         // console.log(id)
-        
-
     })
     res.json({individualPokemon})
+})
+
+router.route("/badge").get((req, res) => {
+    res.json({ badgeData })
+})
+
+app.get("/badge/:id", async (req, res) => {
+    const id = req.params.id
+    const individualBadge = badgeData.find((b) => {
+        return b.name == id
+    })
+    res.json({individualBadge})
 })
 
 app.use((req, res, next) => {
@@ -74,9 +88,9 @@ app.use((req, res) => {
 })
 
 app.use((err, req, res, next) => {
-    res.status(err.status || 500);
-    res.json({ error: err.message });
-});
+    res.status(err.status || 500)
+    res.json({ error: err.message })
+})
 
 app.listen(port, () => {
     console.log(`Server listening on port: ${port}.`)

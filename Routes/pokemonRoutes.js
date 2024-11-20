@@ -1,17 +1,13 @@
 const express = require('express')
 const app = express()
 const router = express.Router()
-// const pokemonController = require('../controllers/pokemonController')
-// const error = require('../utilities/error')
 const pokemonData = require('../data/pokedex')
+const badgeData = require('../data/badges')
+const badge = require('../data/badges')
 
 router.get('/', function (req, res) {
     res.render("index", {})
 })
-
-// router.get('/pokemon', (req, res) => {
-//     res.render("index", {}) 
-//   })
 
 app.get("/pokemon", async (req, res) => {
     // const pokemonObjects = pokemon
@@ -24,9 +20,13 @@ app.get("/pokemon/:id", async (req, res) => {
     console.log(id)
 })
 
-// router.get('/', pokemonController.searchPokemon)
-// router.get('/', pokemonController.viewTeam)
-// router.post('/:id', pokemonController.addPokemonToTeam)
-// router.delete('/:id', pokemonController.deletePokemonFromTeam)
+app.get("/badge", async (req, res) => {
+    console.log(badgeData)
+})
+
+app.get("/badge/:id", async (req, res) => {
+    const id = req.params
+    console.log(id)
+})
 
 module.exports = router
