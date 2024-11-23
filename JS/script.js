@@ -3,6 +3,26 @@ const pokemonList = document.getElementById('Pokemon list')
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault()
+    const name = document.getElementById('name').value
+    //   const type = document.getElementById('type').value
+    //   Was trying to add a way to get the Type also but kept running into errors.
+
+    try {
+        const response = await fetch('/pokemon', {
+            method: 'POST',
+            headers: { 'ContentType': 'application/json' },
+            body: JSON.stringify({ name }),
+        })
+
+        const data = await response.json()
+        console.log(data)
+    } catch (error) {
+        console.error('Error fetching pokemon.', error)
+    }
+})
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault()
 
     const name = document.getElementById('name').value
     console.log(name)

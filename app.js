@@ -5,6 +5,7 @@
 const express = require('express')
 const app = express()
 const fs = require('fs')
+const pokemonRoutes = require('./Routes/pokemonRoutes')
 const port = 3000
 const error = require("./utilities/error")
 const path = require('path')
@@ -24,11 +25,12 @@ app.use(express.urlencoded({ extended: true }))
 
 const pokemonData = require('./data/pokedex')
 const badgeData = require('./data/badges')
-const pokemonRoutes = require('./Routes/pokemonRoutes')
-// const router = require('./Routes/pokemonRoutes')
 
+// const router = require('./Routes/pokemonRoutes')
+app.use(router)
 app.use('/', router)
 app.use('/pokemon', router)
+app.use('/pokemon', pokemonRoutes)
 
 // router.get('/', function (req, res) {
 //     res.render(path.join(__dirname, "index"))
@@ -69,18 +71,25 @@ app.get("/badge/:id", async (req, res) => {
 })
 
 app.use((req, res, next) => {
-    const time = new Date();
+    const time = new Date()
 
     console.log(
         `-----
 ${time.toLocaleTimeString()}: Received a ${req.method} request to ${req.url}.`
-    );
+    )
     if (Object.keys(req.body).length > 0) {
         console.log("Containing the data:");
-        console.log(`${JSON.stringify(req.body)}`);
+        console.log(`${JSON.stringify(req.body)}`)
     }
     next();
-});
+})
+
+app.post('/pokemon', (req, res) => {
+    const { name } = req.body
+    const newPokemon = { id: pokemonData.length + 1, name }
+    pokemonData.push(newPokemon)
+    res.json(newPokemon)
+  })
 
 app.use((req, res) => {
     res.status(404)
@@ -92,7 +101,7 @@ app.use((err, req, res, next) => {
     res.json({ error: err.message })
 })
 
-app.listen(port, () => {
+app.listen(3000, () => {
     console.log(`Server listening on port: ${port}.`)
 })
 
