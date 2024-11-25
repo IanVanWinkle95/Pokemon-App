@@ -8,8 +8,10 @@ const app = express()
 const router = express.Router()
 const pokemonData = require('../data/pokedex')
 const badgeData = require('../data/badges')
-const badge = require('../data/badges')
+const movesData = require('../data/moves')
 const pokemon = require('../data/pokedex')
+const badge = require('../data/badges')
+const moves = require('../data/moves')
 
 // router.get('/', function (req, res) {
 //     res.render("index", {})
@@ -89,6 +91,15 @@ app.get("/badge", async (req, res) => {
 app.get("/badge/:id", async (req, res) => {
     const id = req.params
     console.log(id)
+})
+
+app.get("/moves", async (req, res) => {
+  console.log(movesData)
+})
+
+app.get("/moves/:id", async (req, res) => {
+  const id = req.params
+  console.log(id)
 })
 
 module.exports = router

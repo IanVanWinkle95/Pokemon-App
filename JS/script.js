@@ -37,4 +37,8 @@ form.addEventListener('submit', async (e) => {
     const badgeResponse = await fetch(`${url}/badge/${name}`)
     const badgeData = await badgeResponse.json()
     console.log(badgeData)
+
+    const movesResponse = await fetch(`${url}/moves/${name}`)
+    const movesData = await movesResponse.json()
+    console.log(movesData)
 })

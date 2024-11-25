@@ -25,6 +25,7 @@ app.use(express.urlencoded({ extended: true }))
 
 const pokemonData = require('./data/pokedex')
 const badgeData = require('./data/badges')
+const movesData = require('./data/moves')
 
 // const router = require('./Routes/pokemonRoutes')
 app.use(router)
@@ -55,7 +56,7 @@ app.get("/pokemon/:id", async (req, res) => {
         return p.name == id
         // console.log(id)
     })
-    res.json({individualPokemon})
+    res.json({ individualPokemon })
 })
 
 router.route("/badge").get((req, res) => {
@@ -67,7 +68,19 @@ app.get("/badge/:id", async (req, res) => {
     const individualBadge = badgeData.find((b) => {
         return b.name == id
     })
-    res.json({individualBadge})
+    res.json({ individualBadge })
+})
+
+router.route("/moves").get((req, res) => {
+    res.json({ movesData })
+})
+
+app.get("/moves/:id", async (req, res) => {
+    const id = req.params.id
+    const individualMove = movesData.find((m) => {
+        return m.name == id
+    })
+    res.json({ individualMove })
 })
 
 app.use((req, res, next) => {
@@ -89,7 +102,7 @@ app.post('/pokemon', (req, res) => {
     const newPokemon = { id: pokemonData.length + 1, name }
     pokemonData.push(newPokemon)
     res.json(newPokemon)
-  })
+})
 
 app.use((req, res) => {
     res.status(404)
